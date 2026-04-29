@@ -1,11 +1,30 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response
 import mysql.connector
 import time
-from prometheus_client import Counter, generate_latest
+
+from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
 
 app = Flask(__name__)
 
-REQUEST_COUNT = Counter('app_requests_total', 'Total requests')
+# -----------------------
+# PROMETHEUS METRICS
+# -----------------------
+
+REQUEST_COUNT = Counter(
+    'app_requests_total',
+    'Total HTTP Requests',
+    ['method', 'endpoint']
+)
+
+REQUEST_LATENCY = Histogram(
+    'app_request_latency_seconds',
+    'Request latency per endpoint',
+    ['endpoint']
+)
+
+# -----------------------
+# DATABASE CONNECTION
+# -----------------------
 
 def get_db():
     for _ in range(10):
@@ -20,14 +39,52 @@ def get_db():
             time.sleep(2)
     raise Exception("DB not ready")
 
+# -----------------------
+# PROMETHEUS ENDPOINT
+# -----------------------
+
+@app.route("/metrics")
+def metrics():
+    return Response(generate_latest(), mimetype=CONTENT_TYPE_LATEST)
+
+# -----------------------
+# MIDDLEWARE (METRICS AUTO TRACKING)
+# -----------------------
+
+@app.before_request
+def start_timer():
+    request.start_time = time.time()
+
+
+@app.after_request
+def record_metrics(response):
+    try:
+        if request.endpoint:
+            latency = time.time() - request.start_time
+
+            REQUEST_COUNT.labels(
+                request.method,
+                request.endpoint
+            ).inc()
+
+            REQUEST_LATENCY.labels(
+                request.endpoint
+            ).observe(latency)
+    except:
+        pass
+
+    return response
+
+# -----------------------
+# ROUTES
+# -----------------------
+
 @app.route("/")
 def home():
-    REQUEST_COUNT.inc()
     return "App running"
 
 @app.route("/notes", methods=["GET", "POST"])
 def notes():
-    REQUEST_COUNT.inc()
     db = get_db()
     cursor = db.cursor()
 
@@ -35,14 +92,16 @@ def notes():
         content = request.json.get("content")
         cursor.execute("INSERT INTO notes (content) VALUES (%s)", (content,))
         db.commit()
-        return {"status": "ok"}
+        return jsonify({"status": "created"})
 
-    cursor.execute("SELECT content FROM notes")
-    return jsonify([row[0] for row in cursor.fetchall()])
+    cursor.execute("SELECT * FROM notes")
+    rows = cursor.fetchall()
 
-from flask import Response
-from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
+    return jsonify(rows)
 
-@app.route("/metrics")
-def metrics():
-    return Response(generate_latest(), mimetype=CONTENT_TYPE_LATEST)
+# -----------------------
+# RUN
+# -----------------------
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)

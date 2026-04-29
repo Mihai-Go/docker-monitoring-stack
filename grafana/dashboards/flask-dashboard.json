@@ -1,0 +1,157 @@
+{
+  "annotations": [
+    {
+      "kind": "AnnotationQuery",
+      "spec": {
+        "builtIn": true,
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "query": {
+          "datasource": {
+            "name": "-- Grafana --"
+          },
+          "group": "grafana",
+          "kind": "DataQuery",
+          "spec": {},
+          "version": "v0"
+        }
+      }
+    }
+  ],
+  "title": "Flask Monitoring Stack",
+  "description": "Docker Observability Dashboard",
+  "editable": true,
+
+  "elements": {
+    "panel-1": {
+      "kind": "Panel",
+      "spec": {
+        "title": "Total Requests",
+        "description": "Total number of HTTP requests handled by the Flask application.",
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "refId": "A",
+                  "query": {
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "sum(rate(app_requests_total[5m]))",
+                      "legendFormat": "__auto",
+                      "range": true
+                    },
+                    "datasource": {
+                      "name": "Prometheus"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+
+    "panel-2": {
+      "kind": "Panel",
+      "spec": {
+        "title": "Requests per second",
+        "description": "Rate of incoming HTTP requests.",
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "refId": "A",
+                  "query": {
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "sum(rate(app_requests_total[1m]))",
+                      "range": true
+                    },
+                    "datasource": {
+                      "name": "Prometheus"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+
+    "panel-3": {
+      "kind": "Panel",
+      "spec": {
+        "title": "Average Response Time",
+        "description": "Average latency per request.",
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "refId": "A",
+                  "query": {
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "sum(rate(app_request_latency_seconds_sum[5m])) / sum(rate(app_request_latency_seconds_count[5m]))",
+                      "range": true
+                    },
+                    "datasource": {
+                      "name": "Prometheus"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+
+    "panel-4": {
+      "kind": "Panel",
+      "spec": {
+        "title": "Requests by Endpoint",
+        "description": "Request distribution per endpoint.",
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "refId": "A",
+                  "query": {
+                    "group": "prometheus",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "expr": "sum by (endpoint) (rate(app_requests_total[1m]))",
+                      "range": true
+                    },
+                    "datasource": {
+                      "name": "Prometheus"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}
