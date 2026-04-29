@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+.env
+
+grafana/data/
+prometheus/data/
+
+.vscode/
+.idea/
