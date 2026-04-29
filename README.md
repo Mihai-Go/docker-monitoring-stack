@@ -1,8 +1,8 @@
-kk# Flask Monitoring Stack (Dockerized Observability System)
+# Flask Monitoring Stack (Dockerized Observability System)
 
 ## Overview
 
-This project is a fully containerized observability stack built using Docker Compose. It demonstrates real-time monitoring of a Flask application using Prometheus for metrics collection and Grafana for visualization.
+This project is a fully containerized observability stack built using Docker Compose. It demonstrates real-time monitoring of a Flask web application using Prometheus for metrics collection and Grafana for visualization.
 
 The system follows production-style architecture principles including service separation, reverse proxy routing, persistent storage, and automated dashboard provisioning.
 
@@ -15,8 +15,8 @@ The system consists of the following components:
 - Flask application (instrumented with Prometheus metrics)
 - MySQL database (persistent storage layer)
 - Nginx (reverse proxy for routing traffic)
-- Prometheus (metrics collection and time-series database)
-- Grafana (visualization and dashboarding)
+- Prometheus (metrics collection and time-series storage)
+- Grafana (visualization and dashboards)
 
 ### Data Flow
 
@@ -55,12 +55,12 @@ Flask App → MySQL → Persistent Storage
 
 ## Setup Instructions
 
-### 1. Clone repository
+### Clone repository
 
 ```bash
 git clone <repo-url>
 cd docker-monitoring-stack
-2. Start services
+Start services
 docker-compose up -d --build
 Access Services
 Application: http://<server-ip>/
