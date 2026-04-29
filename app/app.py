@@ -59,17 +59,19 @@ def start_timer():
 @app.after_request
 def record_metrics(response):
     try:
-        if request.endpoint:
+        if request.path:
+
             latency = time.time() - request.start_time
 
             REQUEST_COUNT.labels(
                 request.method,
-                request.endpoint
+                request.path
             ).inc()
 
             REQUEST_LATENCY.labels(
-                request.endpoint
+                request.path
             ).observe(latency)
+
     except:
         pass
 
