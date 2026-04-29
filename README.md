@@ -51,33 +51,42 @@ User → Nginx → Flask Application → MySQL
 
 ```bash
 docker compose up -d --build
-Access Services
-Flask App: http://localhost:5050
-Metrics: http://localhost:5050/metrics
-Prometheus: http://localhost:9090
-Grafana: http://localhost:3000
-Nginx: http://localhost
-Example Metrics
-app_requests_total (request counter)
-process_cpu_seconds_total
-process_resident_memory_bytes
-Python runtime metrics
-Purpose
+```
+
+## Access Services
+
+- Flask App: http://<server-ip>:5050  
+- Metrics Endpoint: http://<server-ip>:5050/metrics  
+- Prometheus: http://<server-ip>:9090  
+- Grafana: http://<server-ip>:3000  
+- Nginx: http://<server-ip>:80  
+
+## Example Metrics
+
+- app_requests_total (HTTP request counter)
+- process_cpu_seconds_total
+- process_resident_memory_bytes
+- Python runtime metrics
+
+## Purpose
 
 This project demonstrates:
 
-Linux system administration fundamentals
-Docker container orchestration
-Multi-service networking
-Database service integration (MySQL)
-Monitoring and observability concepts
-Basic DevOps workflow understanding
-Future Improvements
-Connect Flask application to MySQL for persistent data storage
-Add Prometheus alerting rules
-Preconfigure Grafana dashboards
-Deploy to cloud (GCP/AWS)
-Add CI/CD pipeline
-Author
+- Linux system administration fundamentals
+- Docker container orchestration
+- Multi-service networking
+- Database service integration (MySQL)
+- Monitoring and observability concepts
+- Basic DevOps workflow understanding
+
+## Future Improvements
+
+- Connect Flask application to MySQL for persistent data storage
+- Add Prometheus alerting rules
+- Preconfigure Grafana dashboards
+- Deploy to cloud (GCP/AWS)
+- Add CI/CD pipeline
+
+## Author
 
 Mihai Go
