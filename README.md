@@ -19,10 +19,9 @@ The system consists of the following components:
 - Grafana (visualization and dashboards)
 
 ### Data Flow
-
-Flask App → Prometheus → Grafana  
-Flask App → Nginx → External Requests  
-Flask App → MySQL → Persistent Storage  
+Flask App → Prometheus → Grafana
+Flask App → Nginx → External Requests
+Flask App → MySQL → Persistent Storage
 
 ---
 
@@ -40,7 +39,7 @@ Flask App → MySQL → Persistent Storage
 ### Prometheus
 - Scrapes metrics from Flask application
 - Stores time-series data
-- Provides PromQL query engine≈
+- Provides PromQL query engine
 
 ### Grafana
 - Visualizes system metrics
@@ -55,60 +54,87 @@ Flask App → MySQL → Persistent Storage
 
 ## Setup Instructions
 
-### Clone repository
-
-```bash
-## Setup Instructions
-
-### Clone repository
+### Clone Repository
 
 ```bash
 git clone <repo-url>
 cd docker-monitoring-stack
-Start services
+```
+
+### Start Services
+
+```bash
 docker-compose up -d --build
-Access Services
-Application: http://<server-ip>/
-Metrics: http://<server-ip>/metrics
-Grafana: http://<server-ip>:3000
-Prometheus: http://<server-ip>:9090
-Grafana Login
-Username: admin
-Password: admin (or updated after first login)
-Key Features
-Fully containerized microservices architecture
-Infrastructure-as-code with Docker Compose
-Automated Grafana provisioning (no manual setup required)
-Real-time observability pipeline
-Persistent storage for database and metrics
-Production-style reverse proxy setup with Nginx
-Metrics Tracked
-Total HTTP requests (app_requests_total)
-Requests per second (rate of requests)
-Average response latency
-Requests grouped by endpoint
-Grafana Dashboards
+```
+
+### Access Services
+
+| Service | URL |
+|---|---|
+| Application | `http://<server-ip>/` |
+| Metrics | `http://<server-ip>/metrics` |
+| Grafana | `http://<server-ip>:3000` |
+| Prometheus | `http://<server-ip>:9090` |
+
+### Grafana Login
+
+- **Username:** `admin`
+- **Password:** `admin` (update after first login)
+
+---
+
+## Key Features
+
+- Fully containerized microservices architecture
+- Infrastructure-as-code with Docker Compose
+- Automated Grafana provisioning (no manual setup required)
+- Real-time observability pipeline
+- Persistent storage for database and metrics
+- Production-style reverse proxy setup with Nginx
+
+---
+
+## Metrics Tracked
+
+- Total HTTP requests (`app_requests_total`)
+- Requests per second (rate of requests)
+- Average response latency
+- Requests grouped by endpoint
+
+---
+
+## Grafana Dashboards
 
 Pre-configured dashboards include:
 
-Total Requests
-Requests per Second
-Average Response Time
-Requests by Endpoint
+- Total Requests
+- Requests per Second
+- Average Response Time
+- Requests by Endpoint
 
 Dashboards are automatically loaded at startup.
 
-Technologies Used
-Docker / Docker Compose
-Flask (Python)
-Prometheus
-Grafana
-MySQL
-Nginx
-Author
+---
 
-Mihai-Go
+## Technologies Used
 
-Notes
+| Technology | Role |
+|---|---|
+| Docker / Docker Compose | Container orchestration |
+| Flask (Python) | Web application |
+| Prometheus | Metrics collection |
+| Grafana | Visualization |
+| MySQL | Persistent storage |
+| Nginx | Reverse proxy |
 
-This project is designed as a DevOps / Backend Engineering portfolio demonstration showcasing observability, container orchestration, and production-style system design principles.
+---
+
+## Author
+
+[Mihai-Go](https://github.com/Mihai-Go)
+
+---
+
+## Notes
+
+This project is designed as a DevOps / Backend Engineering portfolio demonstration showcasing observability, container orchestration, and production-style system design principles
