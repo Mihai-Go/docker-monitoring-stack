@@ -55,12 +55,11 @@ docker compose up -d --build
 
 ## Access Services
 
-- Flask App: http://<server-ip>:5050  
-- Metrics Endpoint: http://<server-ip>:5050/metrics  
-- Prometheus: http://<server-ip>:9090  
-- Grafana: http://<server-ip>:3000  
-- Nginx: http://<server-ip>:80  
-
+- Flask App: http://SERVER_IP:5050  
+- Metrics Endpoint: http://SERVER_IP:5050/metrics  
+- Prometheus: http://SERVER_IP:9090  
+- Grafana: http://SERVER_IP:3000  
+- Nginx: http://SERVER_IP:80  
 ## Example Metrics
 
 - app_requests_total (HTTP request counter)
