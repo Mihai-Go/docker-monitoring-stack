@@ -40,7 +40,7 @@ Flask App → MySQL → Persistent Storage
 ### Prometheus
 - Scrapes metrics from Flask application
 - Stores time-series data
-- Provides PromQL query engine
+- Provides PromQL query engine≈
 
 ### Grafana
 - Visualizes system metrics
@@ -53,6 +53,11 @@ Flask App → MySQL → Persistent Storage
 
 ---
 
+## Setup Instructions
+
+### Clone repository
+
+```bash
 ## Setup Instructions
 
 ### Clone repository
